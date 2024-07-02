@@ -1,0 +1,31 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    {% block stylesheet %}{% endblock %}
+</head>
+<body>
+    
+    {% include 'authapp/header.html' %}
+    <!-- <canvas id="canvas" width="500" height="400"></canvas> -->
+    {% block content %}{% endblock %}
+    {% include 'authapp/footer.html' %}
+
+    <!-- Add javascript file here. -->
+     <script src="{% static 'js/base.js' %}"></script>
+     <script src="{% static 'js/header.js' %}"></script>
+     {% block script %}{% endblock %}
+</body>
+</html>

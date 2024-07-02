@@ -1,0 +1,85 @@
+{% load socialaccount %}
+{% load static %}
+
+<div class="nav-container d-flex flex-row mb-2 justify-content-between p-2">
+    <div>
+        <ul class="nav">
+            <li class="nav-item">
+                <a href="{% url 'index' %}" class="nav-link navbar-brand link link-light">Home</a>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        {% if user.is_authenticated %}
+        <ul class="nav">
+
+            <li class="nav-item">
+                <!-- Here a link to logout can be placed but as per the latest update it is recommended to use a form.-->
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">Logout</button>
+                </form>
+            </li>
+            
+            <li>
+                <a href="#id_offcanvas" role="button" data-bs-toggle="offcanvas" data-bs-target="">
+                    <img class="rounded rounded-circle mx-2" src="{{user.socialaccount_set.all.0.get_avatar_url}}" width="40" height="40" alt="dp">
+                </a>
+            </li>
+
+        </ul>
+        {% else %}
+            <ul class="nav">
+                <li class="nav-item me-2">
+                    <a href="{% url 'register-user' %}" class="nav-link btn btn-warning link link-light">Register</a>
+                </li>
+                <li class="nav-item me-2">
+                    <a href="{% url 'login' %}" class="nav-link btn btn-warning link link-light">Login</a>
+                </li>
+            </ul>
+            {% endif %}
+        </li>
+    </ul>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="id_offcanvas">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Profile Detail</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <div class="userinfo border border-dark rounded d-flex">
+
+            <div>
+                <img src="{{user.socialaccount_set.all.0.get_avatar_url}}" alt="dp" class="img-thumbnail mx-auto">
+            </div>
+
+            <div class="logininfo ms-2">
+                <p><strong>Name: </strong>{{user.socialaccount_set.all.0.extra_data.name}}</p>
+
+                <p><strong>Date Joined: </strong>{{user.socialaccount_set.all.0.date_joined}}</p>
+
+                <p><strong>Last Login: </strong>{{user.socialaccount_set.all.0.last_login}}</p>
+            </div>
+
+        </div>
+        <!-- logout link -->
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'register-user' %}">Create a new account</a>
+    </div>
+</div>
+
+<!-- socialaccount model attributes. -->
+
+<!-- Avatar URL: {{ user.socialaccount_set.all.0.get_avatar_url }}
+UID: {{ user.socialaccount_set.all.0.uid }}
+Date Joined: {{ user.socialaccount_set.all.0.date_joined}}
+Last Login: {{ user.socialaccount_set.all.0.last_login}}
+
+And for Full Name: {{ user.socialaccount_set.all.0.extra_data.name }} -->
+
+<!-- More info at-->
+<!-- https://github.com/pennersr/django-allauth/blob/main/allauth/socialaccount/models.py#L89 -->

@@ -1,0 +1,22 @@
+{% extends 'authapp/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block title %}Registration{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+{{form.non_field_errors}}
+<form method="POST" class="shadow p-3 mb-5 rounded w-75 mx-auto  bg-light text-dark " novalidate>
+    {% csrf_token %}
+    {{form | crispy}}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

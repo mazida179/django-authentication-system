@@ -1,0 +1,18 @@
+{% extends 'authapp/base.html' %}
+
+{% load static %}
+
+{% block script %}
+<script src="{% static 'js/name_form.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>Form</h1>
+{% load crispy_forms_tags %}
+<form method="POST" novalidate>
+    {% csrf_token %}
+        {{form}}
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
